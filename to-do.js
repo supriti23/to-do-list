@@ -22,9 +22,36 @@ $(document).ready( () => {
     $('#submit').click(() => {
         let textValue = value[0].value;
         console.log(textValue);
-        createItem(textValue);
-        storeLocally(textValue);
+        let note = {index : getIndex(), text : textValue};
+        createItem(note);
+        arr.push(note);
+        save();
     });
+
+    function edit(self) {
+        let editText = self.target.parentElement.parentElement.firstChild;
+        editText.removeAttribute('readonly');
+        editText.style.backgroundColor = 'white';
+        let oldValue = editText.value;
+        editText.addEventListener('focusout', (self) => { 
+            let newValue = self.target.value;
+            let index = self.target.getAttribute('index');
+            self.target.style.backgroundColor = 'transparent';
+            arr[index] = {index : index, text : newValue};
+            save();
+        });
+    }
+
+    function save() {
+        localStorage.setItem('textNote',JSON.stringify(arr));
+    }
+
+    function getIndex() {
+        if (!arr) {
+            arr = [];
+        }
+        return arr.length;
+    }
 
     function bgColor() {
         let newColor ;
@@ -40,38 +67,42 @@ $(document).ready( () => {
             return newColor;
         }
     }
-    function createItem(noteText) {
-        if(noteText) {
+    function createItem(note) {
+        if(note) {
+            var itemDiv = document.createElement('div');
+            let textDiv = document.createElement('div');
+            let text = document.createElement('input');
+            text.className = 'inputText';
+            text.setAttribute('type','text');
+            text.setAttribute('readonly','true');
+            text.value = note.text;
+            text.setAttribute('index', note.index);
+            textDiv = textDiv.appendChild(text);
+            itemDiv.appendChild(textDiv);
+            let buttonDiv = document.createElement('div');
             var delIcon = document.createElement('span');
             delIcon.classList.add("glyphicon" , "glyphicon-trash");
             var editIcon = document.createElement('span');
             editIcon.classList.add('glyphicon', 'glyphicon-pencil');
-            let buttonDiv = document.createElement('div');
-            var itemDiv = document.createElement('div');
+            editIcon.addEventListener('click', (event) => edit(event));
             buttonDiv.appendChild(editIcon);
             buttonDiv.appendChild(delIcon);
-            buttonDiv.classList.add('float-right');
+            buttonDiv.classList.add('container');
             itemDiv.appendChild(buttonDiv);
-            let item = itemDiv.appendChild(document.createTextNode(noteText));
             itemDiv = document.getElementById('notesContainer').appendChild(itemDiv); 
-            console.log(itemDiv) ;
-            itemDiv.style.cssText = 'height: 200px ; width: 200px ; border-radius: 10px; text-align: center ; padding-top: 20px ; margin-right:20px ; display: flex ';
+            itemDiv.style.cssText = 'border-radius: 10px; text-align: center ;padding-top: 20px ;margin-right:20px ;';
             lastColor = bgColor();
             itemDiv.style.backgroundColor = lastColor ;
-            console.log(lastColor);
-        }  
+        }
+        return editIcon;
     }
 
-    function storeLocally(text) {
-        arr.push(text);
-        console.log(arr);
-        localStorage.setItem('textNote',JSON.stringify(arr));
-    }
     function getLocalStorage() {
         arr = JSON.parse(localStorage.getItem('textNote'));
-        if(arr.length > 0 ) {
-            arr.map(n => createItem(n));
-            console.log(arr);
+        if(arr !=null ) { 
+            if(arr.length > 0 ) {
+                arr.map(n => createItem(n));
+            }
         }
     }
 });

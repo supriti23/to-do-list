@@ -45,6 +45,14 @@
     right: 0;
 }
 
+.inputText { 
+    background: transparent;
+    text-align: center;
+    height: 90px;
+    border: transparent;
+    font : black;
+    
+}
 #submit {
     padding-right: 10px;
     visibility: hidden;
@@ -56,19 +64,40 @@
 #notesContainer {
     padding-left: 10px;
     margin-top: 110px;
+    height: 200px;
+    width: 200px;
     display: flex;
     justify-content: left;
     flex-direction: row;
 }
 .glyphicon {
     color: red;
-    float:right;
-    height: 30px;
-    width: 30px;
-    padding-top: 150px;
-    padding-right:5px
+    height: 35px;
+    width: 35px;
+
+    
     
 }
 .glyphicon:hover{ 
     color : green;
+}
+.container {
+    margin-top:60px;
+    margin-left:110px;
+    width : 100px;
+    height:30px;
+
+}
+
+.glyphicon {
+    
+}
+
+@media (max-width : 500px) {
+    #notesContainer {
+        flex-wrap: wrap;
+        margin-left: auto;
+        margin-right: auto;
+
+    }
 }
