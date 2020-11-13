@@ -1,8 +1,28 @@
 
 $(document).ready( () => { 
-    
     let arr = [];
     let lastColor;
+    document.addEventListener('click', (self) => {
+        let string1 = self.target.className
+        if(string1.indexOf('glyphicon-trash') != -1){
+            deleteNote(self);
+        }
+        if(string1.indexOf('glyphicon-pencil') != -1) {
+            let edit = self.target.parentElement.parentElement.firstChild ;
+            edit.removeAttribute('readonly');
+            edit.style.backgroundColor = 'white';
+            let oldValue = edit.value;
+            edit.addEventListener('focusout', (self) => { 
+                let newValue = self.target.value;
+                let index = self.target.getAttribute('index');
+                self.target.style.backgroundColor = 'transparent';
+                arr[index] = {index : index, text : newValue};
+                save();
+            });
+        } else {
+           $('.inputText').css('background','transparent');
+        }  
+    });
     getLocalStorage();
     $('#add').click(() => {
         $('#text').css('display','block');
@@ -19,6 +39,7 @@ $(document).ready( () => {
             }
         }  
     });
+
     $('#submit').click(() => {
         let textValue = value[0].value;
         console.log(textValue);
@@ -28,19 +49,7 @@ $(document).ready( () => {
         save();
     });
 
-    function edit(self) {
-        let editText = self.target.parentElement.parentElement.firstChild;
-        editText.removeAttribute('readonly');
-        editText.style.backgroundColor = 'white';
-        let oldValue = editText.value;
-        editText.addEventListener('focusout', (self) => { 
-            let newValue = self.target.value;
-            let index = self.target.getAttribute('index');
-            self.target.style.backgroundColor = 'transparent';
-            arr[index] = {index : index, text : newValue};
-            save();
-        });
-    }
+    //$('.glyphicon-trash').click( (value) => deleteNote(value));
 
     function save() {
         localStorage.setItem('textNote',JSON.stringify(arr));
@@ -67,11 +76,13 @@ $(document).ready( () => {
             return newColor;
         }
     }
+
     function createItem(note) {
         if(note) {
             var itemDiv = document.createElement('div');
+            itemDiv.setAttribute('class','itemDiv');
             let textDiv = document.createElement('div');
-            let text = document.createElement('input');
+            let text = document.createElement('textarea');
             text.className = 'inputText';
             text.setAttribute('type','text');
             text.setAttribute('readonly','true');
@@ -84,7 +95,6 @@ $(document).ready( () => {
             delIcon.classList.add("glyphicon" , "glyphicon-trash");
             var editIcon = document.createElement('span');
             editIcon.classList.add('glyphicon', 'glyphicon-pencil');
-            editIcon.addEventListener('click', (event) => edit(event));
             buttonDiv.appendChild(editIcon);
             buttonDiv.appendChild(delIcon);
             buttonDiv.classList.add('container');
@@ -103,6 +113,20 @@ $(document).ready( () => {
             if(arr.length > 0 ) {
                 arr.map(n => createItem(n));
             }
+        }
+    }
+
+    function deleteNote(self ){
+        if(confirm('Are you sure to delete?')) {
+            self.target.parentNode.parentNode.remove();
+            let delValue  = self.target.parentNode.parentNode.firstChild.value;
+            let pos = arr.find( ({text}) => text == delValue);
+            arr.splice(pos.index,1);
+            arr.forEach((val ,i) => {
+                val.index = i;
+            });
+            localStorage.removeItem('textNote');
+            save();
         }
     }
 });
