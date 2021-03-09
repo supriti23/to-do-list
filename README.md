@@ -23,8 +23,5 @@ HTML, CSS and JavaScript.
  ![Alt text](https://github.com/supriti23/to-do-list/blob/main/images/edit.png "Edit")
 
 
-#### Score appears and you can again start the quiz
-
- ![Alt text](https://github.com/supriti23/quiz/blob/main/screenshots/score.jpg "Score appears and you can again start the quiz")
 
 
