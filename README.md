@@ -8,19 +8,19 @@ HTML, CSS and JavaScript.
 
 #### Home Page Demo
 
- ![Alt text](https://github.com/supriti23/quiz/blob/main/screenshots/Screenshot%20Home%20Page.jpg "Home Page")
+ ![Alt text](https://github.com/supriti23/to-do-list/blob/main/images/demo.png "Home Page")
 
-#### Question Demo
+#### Add more notes
 
- ![Alt text](https://github.com/supriti23/quiz/blob/main/screenshots/question.png "Question Demo")
+ ![Alt text](https://github.com/supriti23/to-do-list/blob/main/images/add.png "Add")
 
-#### Once you select an answer it gets highlighted in yellow color
+#### Delete any note
 
- ![Alt text](https://github.com/supriti23/quiz/blob/main/screenshots/selected%20answer.jpg "Selected Answer")
+ ![Alt text](https://github.com/supriti23/to-do-list/blob/main/images/delete.png "Delete")
 
-#### On the last question Submit button appears
+#### Edit Note
 
- ![Alt text](https://github.com/supriti23/quiz/blob/main/screenshots/submit.jpg "On the last question Submit button appears")
+ ![Alt text](https://github.com/supriti23/to-do-list/blob/main/images/edit.png "Edit")
 
 
 #### Score appears and you can again start the quiz
